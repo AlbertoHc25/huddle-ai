@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏈 Huddle AI – Tu Asistente NFL</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+        url('https://eldiariony.com/wp-content/uploads/sites/2/2023/02/GettyImages-1465435812.jpg?quality=80&strip=all&w=1200')
+        no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 🔝 NAVBAR NFL STYLE */
+    .navbar {
+      background: linear-gradient(90deg, #002244, #d50a0a);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+    }
+
+    .navbar img {
+      height: 45px;
+    }
+
+    .navbar .links {
+      display: flex;
+      gap: 25px;
+      font-weight: 500;
+    }
+
+    .navbar .links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .navbar .links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: white;
+      transition: width 0.3s;
+    }
+
+    .navbar .links a:hover::after {
+      width: 100%;
+    }
+
+    /* 💬 Chat Container centrado */
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      background-color: rgba(11, 19, 43, 0.92);
+      border-radius: 20px;
+      padding: 25px;
+      width: 420px;
+      box-shadow: 0 0 35px rgba(0,0,0,0.6);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      text-align: center;
+      color: #00bfff;
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+
+    /* 🎞 Banner NFL corregido */
+    .banner {
+      width: 100%;
+      height: 120px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      background: #0b132b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .banner img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+      animation: float 3s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-8px); }
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #004999;
+      transform: scale(1.05);
+    }
+
+    .chat-box {
+      background-color: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      padding: 10px;
+      height: 280px;
+      width: 100%;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .user-message {
+      text-align: right;
+      background: #007b43;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .bot-message {
+      background: #142850;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .input-container {
+      display: flex;
+      width: 100%;
+      gap: 5px;
+    }
+
+    input {
+      flex: 1;
+      border-radius: 8px;
+      border: none;
+      padding: 10px;
+    }
+
+    .send-btn {
+      background: #00bfff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .send-btn:hover {
+      background: #0099cc;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🔝 NAVBAR -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/a2/National_Football_League_logo.svg" alt="NFL Logo">
+      <span><strong>Huddle AI</strong></span>
+    </div>
+    <div class="links">
+      <a href="#">Inicio</a>
+      <a href="#">Equipos</a>
+      <a href="#">Super Bowls</a>
+      <a href="#">Noticias</a>
+      <a href="#">Contacto</a>
+    </div>
+  </div>
+
+  <!-- 💬 Chatbot centrado -->
+  <div class="main-content">
+    <div class="chat-container">
+      <div class="banner">
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a2/National_Football_League_logo.svg" alt="NFL banner">
+      </div>
+
+      <h1>🏈 Huddle AI – Tu Asistente NFL</h1>
+
+      <div class="buttons">
+        <button onclick="sendMessage('¿Quién ganó el Super Bowl 2020?')">Super Bowl 2020</button>
+        <button onclick="sendMessage('¿Qué equipo tiene más campeonatos?')">Más campeonatos</button>
+        <button onclick="sendMessage('¿Qué es un touchdown?')">Touchdown</button>
+      </div>
+
+      <div class="chat-box" id="chatBox"></div>
+      <div class="input-container">
+        <input id="userInput" type="text" placeholder="Haz una pregunta sobre la NFL...">
+        <button class="send-btn" onclick="sendMessage()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "AIzaSyDlFCptIi-Z_o_B8Bwur6dxIwJR7Eks6UE";
+
+    function cleanMarkdown(text) {
+      return text
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1')
+        .replace(/[`_>#-]/g, '')
+        .replace(/\n+/g, ' ')
+        .trim();
+    }
+
+    async function sendMessage(presetQuestion) {
+      const input = document.getElementById("userInput");
+      const chatBox = document.getElementById("chatBox");
+      const message = presetQuestion || input.value.trim();
+      if (!message) return;
+
+      chatBox.innerHTML += `<div class='user-message'>Tú: ${message}</div>`;
+      input.value = "";
+
+      const body = {
+        contents: [{ parts: [{ text: `Responde solo sobre NFL. ${message}` }] }]
+      };
+
+      try {
+        const res = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          }
+        );
+
+        const data = await res.json();
+        let botReply = "Lo siento, no entendí la pregunta.";
+        if (data && data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
+          botReply = cleanMarkdown(data.candidates[0].content.parts[0].text);
+        }
+
+        chatBox.innerHTML += `<div class='bot-message'>🏈 Huddle AI: ${botReply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+      } catch (error) {
+        console.error(error);
+        chatBox.innerHTML += `<div class='bot-message'>Error al conectar con la API.</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
