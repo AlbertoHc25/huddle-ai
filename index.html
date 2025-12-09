@@ -244,8 +244,8 @@
     </div>
   </div>
 
- <script>
-  const API_KEY = "AIzaSyDPwAQSJ5RX7CwITap6GFeDu_XOz9RbnkM"; 
+<script>
+  const API_KEY = "AIzaSyDPwAQSJ5RX7CwITap6GFeDu_XOz9RbnkM";
 
   function cleanMarkdown(text) {
     return text
@@ -259,31 +259,27 @@
   async function sendMessage(presetQuestion) {
     const input = document.getElementById("userInput");
     const chatBox = document.getElementById("chatBox");
+
     const message = presetQuestion || input.value.trim();
     if (!message) return;
 
-    // Mensaje del usuario
+    // 💬 Mensaje del usuario
     chatBox.innerHTML += `
-      <div class='user-message'>Tú: ${message}</div>
+      <div class="user-message">Tú: ${message}</div>
     `;
-
     input.value = "";
 
     const body = {
-      contents: [
-        {
-          parts: [
-            {
-              text: `Responde solo sobre NFL.\n${message}`
-            }
-          ]
-        }
-      ]
+      contents: [{
+        parts: [{
+          text: `Responde solo sobre NFL.\n${message}`
+        }]
+      }]
     };
 
     try {
       const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-live:generateContent?key=" + API_KEY
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-live:generateContent?key=" + API_KEY,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -295,30 +291,28 @@
 
       let botReply = "Lo siento, no entendí la pregunta.";
 
-      if (
-        data &&
-        data.candidates &&
-        data.candidates[0]?.content?.parts[0]?.text
-      ) {
+      if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
         botReply = cleanMarkdown(data.candidates[0].content.parts[0].text);
       }
 
+      // 🤖 Respuesta del bot
       chatBox.innerHTML += `
-        <div class='bot-message'>🏈 Huddle AI: ${botReply}</div>
+        <div class="bot-message">🏈 Huddle AI: ${botReply}</div>
       `;
-
       chatBox.scrollTop = chatBox.scrollHeight;
 
     } catch (error) {
       console.error(error);
       chatBox.innerHTML += `
-        <div class='bot-message'>Error al conectar con la API.</div>
+        <div class="bot-message">Error al conectar con la API.</div>
       `;
     }
   }
 </script>
+
 </body>
 </html>
+
 
 
 
