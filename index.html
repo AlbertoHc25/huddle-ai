@@ -245,67 +245,68 @@
   </div>
 
 <script>
-const API_KEY = "AIzaSyDPwAQSJ5RX7CwITap6GFeDu_XOz9RbnkM";
+  const API_KEY = "TU_API_KEY_AQUI";
 
-function cleanMarkdown(text) {
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    .replace(/\*(.*?)\*/g, '$1')
-    .replace(/[`_>#-]/g, '')
-    .replace(/\n+/g, ' ')
-    .trim();
-}
-
-async function sendMessage(presetQuestion = null) {
-  const input = document.getElementById("userInput");
-  const chatBox = document.getElementById("chatBox");
-
-  const message = presetQuestion || input.value.trim();
-  if (!message) return;
-
-  chatBox.innerHTML += `<div class='user-message'>${message}</div>`;
-  input.value = "";
-
-  const body = {
-    contents: [
-      {
-        parts: [
-          {
-            text: `Responde solo sobre la NFL. Pregunta: ${message}`
-          }
-        ]
-      }
-    ]
-  };
-
-  try {
-    const res = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      }
-    );
-
-    const data = await res.json();
-
-    let botReply = "Lo siento, no encontré la respuesta.";
-    if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
-      botReply = cleanMarkdown(data.candidates[0].content.parts[0].text);
-    }
-
-    chatBox.innerHTML += `<div class='bot-message'>🏈 Huddle AI: ${botReply}</div>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-  } catch (error) {
-    console.error(error);
-    chatBox.innerHTML += `<div class='bot-message'>Error al conectar con la API.</div>`;
+  function cleanMarkdown(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/[`_>#-]/g, '')
+      .replace(/\n+/g, ' ')
+      .trim();
   }
-}
+
+  async function sendMessage(presetQuestion) {
+    const input = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatBox");
+
+    const message = presetQuestion || input.value.trim();
+    if (!message) return;
+
+    // mensaje del usuario
+    chatBox.innerHTML += `<div class='user-message'>Tú: ${message}</div>`;
+    input.value = "";
+
+    const body = {
+      contents: [
+        {
+          parts: [
+            { text: `Responde solo sobre NFL.\n${message}` }
+          ]
+        }
+      ]
+    };
+
+    try {
+      const res = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        }
+      );
+
+      const data = await res.json();
+
+      let botReply = "Lo siento, no entendí la pregunta.";
+
+      if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+        botReply = cleanMarkdown(data.candidates[0].content.parts[0].text);
+      }
+
+      chatBox.innerHTML += `<div class='bot-message'>🏈 Huddle AI: ${botReply}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+    } catch (error) {
+      console.error(error);
+      chatBox.innerHTML += `<div class='bot-message'>Error al conectar con la API.</div>`;
+    }
+  }
 </script>
 </body>
 </html>
+
 
 
 
