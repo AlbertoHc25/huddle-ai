@@ -302,9 +302,18 @@
       chatBox.innerHTML += `<div class='bot-message'>Error al conectar con la API.</div>`;
     }
   }
+
+  // Permitir enviar con ENTER
+  document.getElementById("userInput").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      sendMessage();  // Ejecuta la misma función que el botón
+    }
+  });
+
 </script>
 </body>
 </html>
+
 
 
 
